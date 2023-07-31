@@ -30,10 +30,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_092228) do
     t.string "category"
     t.decimal "price", default: "0.0"
     t.string "image_url"
-    t.bigint "users_id", null: false
+    t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["users_id"], name: "index_products_on_users_id"
+    t.index ["user_id"], name: "index_products_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -46,5 +46,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_07_31_092228) do
 
   add_foreign_key "carts", "products"
   add_foreign_key "carts", "users"
-  add_foreign_key "products", "users", column: "users_id"
+  add_foreign_key "products", "users"
 end
