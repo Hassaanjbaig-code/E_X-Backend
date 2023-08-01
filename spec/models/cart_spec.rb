@@ -12,7 +12,7 @@ RSpec.describe Cart, type: :model do
     @cart_attributes = {
       quantity: 3,
       total_price: 24,
-      user_id: @user.id, # Change @user to @user.id to get the user's ID
+      user_id: @user.id, 
       product_id: @product.id
     }
   end

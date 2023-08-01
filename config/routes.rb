@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  # get 'carts/index'
+  # get 'carts/show'
+  # get 'carts/create'
+  # get 'carts/destroy'
   # get 'user/index'
   # get 'user/create'
   # get 'user/show'
@@ -10,6 +14,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :users, only: [ :index, :create, :show ]
       resources :products, only: [ :index, :show, :create ]
+      resources :carts, only: [:index, :show, :create, :destroy]
     end
   end
 end
