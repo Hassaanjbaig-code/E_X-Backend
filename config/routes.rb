@@ -15,7 +15,8 @@ Rails.application.routes.draw do
       resources :users, only: [ :index, :create, :show ]
       get '/me', to: 'users#me'
       post '/login', to: 'authentications#login'
-      resources :products, only: [ :index, :show, :create ]
+      resources :products, only: [ :index, :show, :create, :destroy ]
+      get '/myproducts' , to: 'products#myproduct'
       resources :carts, only: [:index, :show, :create, :destroy]
     end
   end

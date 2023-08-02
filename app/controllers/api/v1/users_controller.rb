@@ -15,10 +15,6 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
-  # def logged_in
-  #   user = user.find(params[:email])
-  # end
-
   def show
     render json: @user, status: :ok
   end
