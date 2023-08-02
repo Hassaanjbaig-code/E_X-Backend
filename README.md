@@ -143,13 +143,10 @@ fetch("http://127.0.0.1:3001/api/v1/products/7", {
 }
 */
 ```
+### Deleting a product
 
 ```js
 
-
-Note: Edited data will not really be updated into the database.
-
-### Deleting a product
 
 ```js
 fetch("http://127.0.0.1:3001/api/v1/products/8", {
@@ -184,9 +181,12 @@ GET:
 - /products/1 (Deleting a Products)
 - /products/1 (Updating a Products)
 
+```
+
 
 ## Carts
 
+```
 ```js
 fetch("http://127.0.0.1:3001/api/v1/carts", {
   method: "PUT",
@@ -234,7 +234,7 @@ DELETE:
 
 ### Creating a user
 
-    ```js
+```
 fetch("http://127.0.0.1:3001/api/v1/user", {
   method: "POST",
   body: JSON.stringify({
