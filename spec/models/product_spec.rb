@@ -3,12 +3,6 @@ require 'rails_helper'
 RSpec.describe Product, type: :model do
   before(:all) do
     @user = User.create(name: 'test1', email: 'test1@yopmail.com', password: '1234')
-    # @product = Product.create(
-    #   title: "Mens Casual Premium Slim Fit T-Shirts", 
-    #   category: "men's clothing", 
-    #   price: 12, 
-    #   image_url: "https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg", 
-    #   user_id: @user)
     @product_attribute = {
       title: "Mens Casual Premium Slim Fit T-Shirts", 
       category: "men's clothing", 
