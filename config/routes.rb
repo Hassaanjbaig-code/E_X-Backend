@@ -13,7 +13,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :users, only: [ :index, :create, :show ]
-      resources :products, only: [ :index, :show, :create ]
+      get '/me', to: 'users#me'
+      post '/login', to: 'authentications#login'
+      resources :products, only: [ :index, :show, :create, :destroy ]
+      get '/myproducts' , to: 'products#myproduct'
       resources :carts, only: [:index, :show, :create, :destroy]
     end
   end
