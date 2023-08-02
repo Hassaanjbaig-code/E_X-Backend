@@ -123,7 +123,7 @@ fetch("http://127.0.0.1:3001/api/v1/products/7", {
     title: "test product",
     price: 13.5,
     description: "lorem ipsum set",
-    image: "https://i.pravatar.cc",
+    image: "File",
     category: "electronic",
     quantity: '12'
   }),
@@ -161,7 +161,7 @@ Nothing will delete on the database.
 
 ### Products
 
-```js
+```
 fields:
 {
     id:Number,
@@ -187,7 +187,6 @@ GET:
 ## Carts
 
 ```
-```js
 fetch("http://127.0.0.1:3001/api/v1/carts", {
   method: "PUT",
   body: JSON.stringify({
