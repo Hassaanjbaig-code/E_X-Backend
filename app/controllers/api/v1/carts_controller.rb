@@ -1,6 +1,8 @@
 class Api::V1::CartsController < ApplicationController
+
   def index
-    render json: Cart.all
+    @user = current_user
+    render json: @user.cart.all
   end
 
   def show
@@ -13,9 +15,9 @@ class Api::V1::CartsController < ApplicationController
   end
 
   def create
+    @user =current_user
     @cart = Cart.new(cart_params)
-    @cart.user_id = 1
-    @cart.product_id = 1
+    @cart.user_id = @user.id
     if @cart.save
       render json: @cart, status: :created, notice: 'Cart is created'
     else
@@ -24,13 +26,18 @@ class Api::V1::CartsController < ApplicationController
   end
 
   def destroy
-    @cart = Cart.find(params[:id])
+    @user = current_user
+    @cart = @user.cart.find(params[:id])
     @cart.destroy
   end
 
   private
 
   def cart_params
-    params.permit(:quantity, :total_price)
+    params.permit(:quantity, :total_price, :product_id)
+  end
+
+  def set_user
+    @user = current_user
   end
 end
