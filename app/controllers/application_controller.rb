@@ -3,6 +3,10 @@ class ApplicationController < ActionController::API
 
     before_action :authenticate_request
 
+    def current_user
+        @current_user
+    end
+
     private
     def authenticate_request
         header = request.headers["Authorization"]

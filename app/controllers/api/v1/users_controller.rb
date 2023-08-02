@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  skip_before_action :authenticate_user!, only: [:create]
+  skip_before_action :authenticate_request, only: [:create]
   before_action :set_user, only: [:show, :destroy]
 
   def index
@@ -20,8 +20,11 @@ class Api::V1::UsersController < ApplicationController
   # end
 
   def show
-    user = User.find(params[:id])
-    render json: user
+    render json: @user, status: :ok
+  end
+
+  def me
+    render json: current_user
   end
 
   def destroy
