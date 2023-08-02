@@ -5,7 +5,7 @@ RSpec.describe User, type: :model do
         @user_attribute = {
             name: 'test01',
             email: 'test01@yopmail.com',
-            password: 1234
+            password: '1234'
         }
     end
 

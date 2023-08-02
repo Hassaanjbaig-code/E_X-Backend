@@ -8,12 +8,18 @@ class Api::V1::ProductsController < ApplicationController
 
     def show
         product = Product.find(params[:id])
+        product = product.as_json(include: :image).merge(
+          image: product.image.map do |image|
+            url_for(image)
+          end
+        )
+      
         if product
-            render json: product
+          render json: product
         else
-            render json: { error: 'Product is not found' }, status: :bad_request
+          render json: { error: 'Product is not found' }, status: :bad_request
         end
-    end
+      end      
 
     def myproduct
         @user = current_user
@@ -23,14 +29,24 @@ class Api::V1::ProductsController < ApplicationController
 
     def create
         @user = current_user
-        @product = @user.product.build(tour_params)
+        @product = @user.product.build(product_params.except(:image))
         @product.user_id = @user.id
+      
         if @product.save
-            render json: @product, status: :created, notice: 'Product is created'
-            else
-                render json: { error: 'Product is not created' }, status: :bad_request
+            images = Array(params[:image])
+          if images
+            images.each do |image|
+              @product.image.attach(image) 
+            end
+          end
+      
+          render json: @product, status: :created, notice: 'Product is created'
+        else
+          render json: { error: 'Product is not created' }, status: :bad_request
         end
-    end
+      end
+      
+      
 
     def destroy
         @user = current_user
@@ -44,7 +60,7 @@ class Api::V1::ProductsController < ApplicationController
         @user = current_user
     end
 
-    def tour_params
-        params.permit(:title, :category, :price, :image_url, :quantity)
+    def product_params
+        params.permit(:title, :category, :price, :desc, :quantity, image: [])
     end
 end
