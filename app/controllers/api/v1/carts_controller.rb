@@ -18,10 +18,24 @@ class Api::V1::CartsController < ApplicationController
     @user =current_user
     @cart = Cart.new(cart_params)
     @cart.user_id = @user.id
-    if @cart.save
-      render json: @cart, status: :created, notice: 'Cart is created'
+    quantity = @cart.quantity
+    product = Product.find_by(id: @cart.product_id)
+
+    if quantity <= 0
+      render json: { error: 'Quantity should be greater than zero' }, status: :bad_request
+    elsif product.nil?
+      render json: { error: 'Product not found' }, status: :bad_request
+    elsif quantity > product.quantity
+      render json: { error: 'Not enough products available in stock' }, status: :bad_request
     else
-      render json: { error: 'You have not seleted the product which you wnated to buy' }
+      # Subtract the cart's quantity from the product's quantity
+      product.quantity -= quantity
+  
+      if product.save && @cart.save
+        render json: @cart, status: :created, notice: 'Cart is added'
+      else
+        render json: { error: 'Could not create cart' }, status: :bad_request
+      end
     end
   end
 

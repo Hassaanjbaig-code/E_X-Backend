@@ -45,6 +45,6 @@ class Api::V1::ProductsController < ApplicationController
     end
 
     def tour_params
-        params.permit(:title, :category, :price, :image_url)
+        params.permit(:title, :category, :price, :image_url, :quantity)
     end
 end
