@@ -42,7 +42,13 @@ class Api::V1::CartsController < ApplicationController
   def destroy
     @user = current_user
     @cart = @user.cart.find(params[:id])
-    @cart.destroy
+    product = Product.find(@cart.product_id)
+    product.quantity += @cart.quantity
+    if product.save && @cart.destroy 
+      render json: { notice: 'Carts is deleted', status: 'deleted' }, status: :ok
+    else
+      render json: { error: @cart.errors.full_messages }, status: :bad_request
+    end
   end
 
   private

@@ -1,11 +1,4 @@
 Rails.application.routes.draw do
-  # get 'carts/index'
-  # get 'carts/show'
-  # get 'carts/create'
-  # get 'carts/destroy'
-  # get 'user/index'
-  # get 'user/create'
-  # get 'user/show'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
