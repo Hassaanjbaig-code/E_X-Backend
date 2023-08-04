@@ -3,6 +3,7 @@ class User < ApplicationRecord
     has_secure_password
     has_many :product
     has_many :cart
+    has_many :comment
 
     validates :name, :email, :password, presence: true
 
