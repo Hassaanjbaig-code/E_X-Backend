@@ -1,9 +1,15 @@
 class Api::V1::CommentsController < ApplicationController
-  skip_before_action :authenticate_request, only: [:product_comment]
-  def product_comment
-    @product = Product.find(params[:product_id]) # Use "params[:product_id]" instead of "params[:id]"
-    render json: @product.comments.all # Assuming "comments" is the association name between products and comments
-  end  
+  skip_before_action :authenticate_request, only: [:index]
+  before_action :set_user, only: [:create, :update, :destroy]
+  # def product_comment
+  #   @product = Product.find(params[:product_id])
+  #   render json: @product.comments.all
+  # end  
+
+  def index
+    comment = Comment.all
+    render json: comment
+  end
 
   def create
     @user = current_user
@@ -17,8 +23,7 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def destroy
-    user = current_user
-    comment = user.product.comment.find(params[:id])
+    comment = @user.comment.find(params[:id])
     if comment.destroy
       render json: { notice: 'Comment is delete' }, status: :ok
     else
@@ -27,18 +32,21 @@ class Api::V1::CommentsController < ApplicationController
   end
 
   def update
-    user = current_user
-    product = Product.find(params[:id])
-    comment = product.comment.update(comment_parms)
-    comment.product_id = product.id
-    if comment.update
-      render json: comment, notice: 'Comment is update', status: :ok
-    else
-      render json: { error: comment.errors.full_messages }, status: :unprocessable_entity
-    end
+    comment = @user.comment.find(params[:id])  # Use "comments" instead of "comment" for the association
+      comment.user_id = @user.id
+      if comment.update(comment_parms)
+        render json: comment, notice: 'Comment is updated', status: :ok  # Use "comment" instead of "@user.comment"
+      else
+        render json: { error: comment.errors.full_messages }, status: :unprocessable_entity
+      end
   end
+  
 
   private
+
+  def set_user
+    @user = current_user
+  end
 
   def comment_parms
     params.permit(:comment, :product_id)

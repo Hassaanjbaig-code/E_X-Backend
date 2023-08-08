@@ -15,8 +15,8 @@ Rails.application.routes.draw do
       resources :products, only: [ :index, :show, :create, :destroy, :update ]
       get '/myproducts' , to: 'products#myproduct'
       resources :carts, only: [:index, :show, :create, :destroy]
-      resources :comments, only: [:create, :destroy, :update]
-      get '/product_comment', to: 'comments#product_comment'
+      resources :comments, only: [:index ,:create, :destroy, :update]
+      # get '/product_comment', to: 'comments#product_comment'
     end
   end
 end

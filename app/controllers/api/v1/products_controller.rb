@@ -1,10 +1,17 @@
 class Api::V1::ProductsController < ApplicationController
     skip_before_action :authenticate_request, only: [:index, :show ]
     before_action :set_user, only: [:create, :destroy, :myproduct, :update]
-    def index 
-        product = Product.all.order(created_at: :desc)
-        render json: product
+    def index
+      products = Product.all.order(created_at: :desc)
+    
+      product_comments = products.map do |product|
+        comments = product.comment
+        { product: product, comments: comment }
+      end
+    
+      render json: product_comments
     end
+    
 
     def show
         product = Product.find(params[:id])
